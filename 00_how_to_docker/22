@@ -1,0 +1,9 @@
+ssh into the container:
+``` sh
+docker-machine ssh Aiur
+```
+
+Run this command in the container, replacing the swarm-token and the host IP with the ones generated earlier:
+``` sh
+docker swarm join --token $(docker swarm join-token worker -q) $(docker-machine ip Char):2377
+```

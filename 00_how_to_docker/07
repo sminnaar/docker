@@ -1,0 +1,4 @@
+# Inspecting a contaner returns a .JSON with the IP as an attribute
+# -f formats the output and only prints the IP of the container
+
+docker inspect -f '{{.NetworkSettings.IPAddress}}' overlord

@@ -1,0 +1,3 @@
+# Pull the hello-world docker image
+
+docker pull hello-world:latest

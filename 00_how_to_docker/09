@@ -1,0 +1,13 @@
+# Run container with debian running, (-it) open a terminal in it
+# and (--rm) remove itself when exited:
+
+``` sh
+docker run -it --rm debian
+```
+
+# These commands should be run in the docker machine's terminal.
+# these will update the libraries, and install gcc, vim and git
+
+``` sh
+apt-get update && apt-get install -y gcc vim git
+```
