@@ -1,1 +1,6 @@
+# Run a docker container, (-d) detatch, (-p) bind port 8081 of the docker-
+# machine to port 80 of the container, (--link) import env variables from
+# spawning-pool with prefix db, (--name) name it and use the phpmyadmin
+# image
+
 docker run -d -p 8081:80 --link spawning-pool:db --name roach-warden phpmyadmin/phpmyadmin

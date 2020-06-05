@@ -1,9 +1,15 @@
-ssh into the Char virtual machine:
+# ssh into the Char virtual machine:
+
 ``` sh
 docker-machine ssh Char
 ```
 
-Then run tis command in the shell:
+# Then run tis command in the shell:
+# Displays the logs of a docker service. The $() returns the tasks of a
+# running service, (-f) format the output and (-q) quite, return only id's
+# The format flag takes a string, in this case one (.1) replica of the
+# engineering-bay service
+
 ``` sh
 docker service logs $(docker service ps engineering-bay -f 'name=engineering-bay.1' -q)
 ```

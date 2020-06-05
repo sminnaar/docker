@@ -1,1 +1,4 @@
+# Remove docker image (-f) force removal. The $() variable will return
+# the id of all docker images. (-q) Quite, only return id's
+
 docker rmi -f $(docker images -q)

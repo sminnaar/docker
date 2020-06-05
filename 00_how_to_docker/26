@@ -1,1 +1,6 @@
+# Create a docker service (a container runninng in a swarm) with, (-e) 
+# environmental variables, (--replicas) duplicate the service, (--network)
+# connect to a swarm network, (--name) name it and use the
+# 42school/engineering-bay image
+
 docker service create -e OC_USERNAME=commander -e OC_PASSWORD=Kerrigan --replicas 2 --network overmind --name engineering-bay 42school/engineering-bay

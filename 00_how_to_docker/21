@@ -1,1 +1,4 @@
+# Create a docker-machine (VM), (--driver) user a specific driver and
+# name it Auir
+
 docker-machine create --driver virtualbox Auir

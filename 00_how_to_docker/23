@@ -1,1 +1,3 @@
+# Create a docker network of (--driver) overlay type and name it overmind
+
 docker network create --driver overlay overmind

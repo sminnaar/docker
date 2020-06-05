@@ -1,1 +1,3 @@
+# Display logs of a docker container
+
 docker logs spawning-pool

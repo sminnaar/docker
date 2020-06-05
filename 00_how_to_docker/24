@@ -1,1 +1,5 @@
+# Launch a docker service (a container connected in a swarm) with, (-e) 
+# set environmental variables, (--name) name it, (--network) connect it
+# and use the rabbitmq image
+
 docker service create -e RABBITMQ_DEFAULT_USER=commander -e RABBITMQ_DEFAULT_PASS=Kerrigan --name orbital-command --network overmind rabbitmq

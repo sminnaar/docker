@@ -1,1 +1,3 @@
+# Scale (increase or decrease) a docker service
+
 docker service scale marines=20
