@@ -1,1 +1,3 @@
+# Execute the env command in the spawning-pool container
+
 docker exec spawning-pool env
