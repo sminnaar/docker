@@ -4,3 +4,10 @@
 # image
 
 docker run -d -p 8081:80 --link spawning-pool:db --name roach-warden phpmyadmin/phpmyadmin
+
+# Note: The wordpress server database connection will not work until you run the phpmyadmin
+# container and change the Password Hashing for the authentication.
+# Go to <Char ip>:8081, use root as the user and Kerrigan as the password. In General settings
+# click change password. At the Password Hashing option, select "Native MySQL authentication".
+# Change the password to "Kerrigan". Now the Wordpress container should be able to connect to
+# the database.

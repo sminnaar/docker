@@ -9,16 +9,17 @@
 docker run -d -p 3000:3000 --name Abathur -v /home/docker/:/root -e FLASK_APP=app.py -w /root python:2-slim bash -c "apt update && apt upgrade -y && pip install flask && flask run -h 0.0.0.0 -p 3000"
 
 # Wait for the docker to finish installing the pacages then run:
-``` sh
+
 docker cp app.py Abathur:/root
-```
 
 # This needs to be created and then copied into the container
 # app.py:
 
+/*
 from flask import Flask
 
 app = Flask(__name__)
 @app.route('/')
 def msg():
     return '<h1>Hello World</h1>'
+*/

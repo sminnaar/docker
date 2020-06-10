@@ -1,4 +1,4 @@
-# Remove docker container, (-f) force. The $() varible will return
-# the id's of (-a) all and (-q) quite: only return container id's
+# Remove docker container, (-f) force. The $() varible will return the id's of (-a) all and
+# (-q) quite: only return container id's
 
 docker rm -f $(docker ls -a -q)

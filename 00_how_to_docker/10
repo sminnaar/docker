@@ -1,5 +1,4 @@
-# Create a docker volume named hatchery this is allocateble storage
-# for your containers to use. In this case it will be for the mysql
-# databse
+# Create a docker volume named hatchery this is allocateble storage for your containers to use.
+# In this case it will be used by the mysql docker container
 
 docker volume create --name hatchery

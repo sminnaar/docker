@@ -1,4 +1,3 @@
-# Stop and (rm) remove/delete a Docker machine, (-y) auto select
-# yes for prompt
+# Stop and (rm) remove/delete a Docker machine, (-y) auto select yes for prompt
 
 docker-machine rm -y Aiur

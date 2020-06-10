@@ -4,4 +4,3 @@
 ``` sh
 eval $(docker-machine env Char)
 ```
-

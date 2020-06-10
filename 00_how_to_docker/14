@@ -1,6 +1,11 @@
-# Run a docker container, (-d) detatch, (--name) name it, (-p) bind port 
-# 8080 of the docker machine to port 80 of the container, (--link) import
-# env from a container as :tag, (-e) set env variables and use the wordpress
-# image
+# Run a docker container, (-d) detatch, (--name) name it, (-p) bind port 8080 of the docker-machine
+# to port 80 of the container, (--link) import env from a container as :tag, (-e) set env variables
+# and use the wordpress image
 
 docker run -d --name lair -p 8080:80 --link spawning-pool:mysql -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASS=Kerrigan -e WORDPRESS_DB_HOST=mysql -e MYSQL_PORT_3306_TCP=3306  wordpress
+
+# Note: The wordpress database connection will not work until you run the command in step 15
+# Go to <Char ip>:8081, use root as the user and Kerrigan as the password. In General settings
+# click change password. At the Password Hashing option, select "Native MySQL authentication".
+# Change the password to "Kerrigan". Now the Wordpress container should be able to connect to
+# the database.
