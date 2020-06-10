@@ -1,6 +1,6 @@
-# Launch a container, set restart varible, bind port 80
-# to docker-machine port 5000, detach (-d) named overlord
-# using the nginx image
+# Launch a container, set restart varible, bind port 80 to docker-machine port 5000, (-d) detach,
+# (--name) name it overlord and use the nginx image
+
 # Use <docker-machine-ip>:<port> to test
  
 

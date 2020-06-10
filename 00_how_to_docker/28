@@ -1,4 +1,4 @@
 # Create a docker service, (-e) set environmental variable, (--replicas) create replicas,
 # (--network) connect to a network, (--name) name it and use the 24school/marine-squad image
 
-docker service create -e OC_USERNAME=commander -e OC_PASSWD=Kerrigan --replicas 2 --network overmind --name marines 24school/marine-squad
+docker service create -e OC_USERNAME=commander -e OC_PASSWD=Kerrigan --replicas 2 --network overmind --name marines 42school/marine-squad

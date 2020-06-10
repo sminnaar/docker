@@ -2,9 +2,8 @@
 
 docker-machine ssh Aiur
 
-# Join a docker swarm using a docker swarm token and host IP. The first $() will return
-# the worker join-token. (-q) quite, only return token
+# Join a docker swarm using a docker swarm token and host IP.
 
-# Run this command in the container:
+# Run this command in the container, replacing everything within the <>:
 
-docker swarm join --token $(docker swarm join-token worker -q) $(docker-machine ip Char):2377
+docker swarm join --token <swarm join-token> <docker-machine ip Char>:2377

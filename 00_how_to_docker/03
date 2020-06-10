@@ -1,6 +1,4 @@
 # Set DOCKER ENV varialbles to console environment.
 # run "env|grep DOCKER" before and after to check
 
-``` sh
 eval $(docker-machine env Char)
-```
