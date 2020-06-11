@@ -1,14 +1,14 @@
 FROM debian
 
-ENV TS3DIR=/opt/TS3 TS3SERVER_LICENSE=accept
+ENV TS=/opt/TS3 TS3SERVER_LICENSE=accept
 
-RUN apt update && apt upgrade -y && apt install bzip2 wget apt-utils ca-certificates -y && rm -rf /var/lib/apt/lists/* && wget https://files.teamspeak-services.com/releases/server/3.10.2/teamspeak3-server_linux_amd64-3.10.2.tar.bz2 -O /tmp/chat_server.tar.bz2 && tar jvxf /tmp/chat_server.tar.bz2 -C /opt && mv /opt/teamspeak3-server_* ${TS3DIR} && rm tmp/chat_server.tar.bz2 && groupadd -g 503 teamspeakadmin && useradd -u 503 -g 503 -d ${TS3DIR} teamspeakadmin && mkdir /data && chown -R teamspeakadmin:teamspeakadmin ${TS3DIR} /data
+RUN apt update && apt upgrade -y && apt install bzip2 wget apt-utils ca-certificates -y && rm -rf /var/lib/apt/lists/* && wget https://files.teamspeak-services.com/releases/server/3.10.2/teamspeak3-server_linux_amd64-3.10.2.tar.bz2 -O /tmp/chat_server.tar.bz2 && tar jvxf /tmp/chat_server.tar.bz2 -C /opt && mv /opt/teamspeak3-server_* ${TS} && rm tmp/chat_server.tar.bz2 && groupadd -g 503 teamspeakadmin && useradd -u 503 -g 503 -d ${TS} teamspeakadmin && mkdir /data && chown -R teamspeakadmin:teamspeakadmin ${TS} /data
 
 USER teamspeakadmin
 
 EXPOSE 9987/UDP 30033 10011
 
-WORKDIR ${TS3DIR}
+WORKDIR ${TS}
 
 ENTRYPOINT [ "sh", "ts3server_minimal_runscript.sh" ]
 
@@ -18,7 +18,7 @@ ENTRYPOINT [ "sh", "ts3server_minimal_runscript.sh" ]
 # docker build -t debian:ex01 .
 
 # To run the container:
-# docker run -dit --init --rm --name chat_server -p 9987:9987/udp -p 10011:10011 -p 30033:30033 debian:ex01
+# docker run -dit --init --rm --name ts_server -p 9987:9987/udp -p 10011:10011 -p 30033:30033 debian:ex01
 
-# Run "docker logs chat_server" to get the password and privilege key.
+# Run "docker logs ts_server" to get the password and privilege key.
 # Start the teamspeak client and connect using $(docker-machine ip Char):9987 as Address.
