@@ -1,3 +1,5 @@
-# Launch a mysql container
+# Launch a mysql container, (-d) detach, set restart, (-p) bind port 3306 of docker-machine to
+# port 3306 of container, (-v) attach volume, (-e) set environmental variables, (--name) name it
+# and use the mysql:latest image
 
-docker run -d --restart=always -p 3306:3306 -v hatchery:/var/lib/mysql -e MYSQL_DATABASE=zerglings -e MYSQL_ROOT_PASSWORD=Kerrigan --name spawning-pool mysql -s
+docker run -d --restart=always -p 3306:3306 -v hatchery:/var/lib/mysql -e MYSQL_DATABASE=zerglings -e MYSQL_ROOT_PASSWORD=Kerrigan --name spawning-pool mysql
