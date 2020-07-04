@@ -15,10 +15,10 @@ from flask import Flask
 app = Flask(__name__)
 @app.route('/')
 def msg():
-    return '<h1>Hello World</h1>'
+    return '<marquee><h1>Hello World</h1></marquee>'
 */
 
 # Wait for the docker to finish installing the pacages then run this command to copy the app.py file
-# into the container
+# into the container. The file will be at root on the Char virtual-machine.
 
 docker cp app.py Abathur:/root
