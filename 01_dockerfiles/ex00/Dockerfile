@@ -1,10 +1,9 @@
-FROM alpine
+FROM alpine:latest
 
-RUN apk update && apk add vim
+RUN apk add --update vim htop && rm -rf /var/cache/apk/*
 
-# CMD vim the_file.c
-ENTRYPOINT [ "vim" ]
-
+# CMD [ "htop" ]
+CMD [ "vim" ]
 # To build the image and tag(-t) it with the exercise nr:
 # The last arg is the Dockerfile location(In this case "." or "current").
 

@@ -5,7 +5,7 @@
 # to prompts, use pip to install flask and run flask with the host at 0.0.0.0 and bind it to port 3000
 # of the container
 
-docker run -d -p 3000:3000 --name Abathur -v /home/docker/:/root -e FLASK_APP=app.py -w /root python:2-slim bash -c "apt update && apt upgrade -y && pip install flask && flask run -h 0.0.0.0 -p 3000"
+docker run -d -p 3000:3000 --name Abathur -v /home/docker/:/root -e FLASK_APP=app.py -w /root python:2-slim bash -c "apt update && apt upgrade -y && python -m pip install --upgrade pip && pip install flask && flask run -h 0.0.0.0 -p 3000"
 
 # app.py needs to be created with the following content and then copied into the container:
 
