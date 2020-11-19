@@ -1,9 +1,1 @@
-# ssh into the container:
-
-docker-machine ssh Aiur
-
-# Join a docker swarm using a docker swarm token and host IP.
-
-# Run this command in the container, replacing everything within the <>:
-
-docker swarm join --token <swarm join-token> <docker-machine ip Char>:2377
+docker-machine ssh Aiur "docker swarm join --token SWMTKN-1-3vf7l9thkaljcl3imhogax7aybwd4n49zxo356kjxznc062mdk-6chq7q4x5hu0w1dsks13hniuy 192.168.99.106:2377"

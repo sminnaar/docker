@@ -1,3 +1,1 @@
-# Display docker service tasks
-
 docker service ps marines

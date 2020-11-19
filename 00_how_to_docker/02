@@ -1,3 +1,1 @@
-# Get the IP of Char
-
 docker-machine ip Char

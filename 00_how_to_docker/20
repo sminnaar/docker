@@ -1,10 +1,1 @@
-# Initialise a docker swarm, (--advertise-addr) advertise its address as a string and bind it
-# to the docker-machine port 2377. The <> should be replaced with the Char docker-machine IP
-
-docker swarm init --advertise-addr <Char docker-machine IP>:2377
-
-# Only use port 2377 or leave it blank to use default(2377).
-
-# To test:
-
-docker node ls
+docker swarm init --advertise-addr $(docker-machine ip Char):2377

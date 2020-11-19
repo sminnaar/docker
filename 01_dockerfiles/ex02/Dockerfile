@@ -1,50 +1,18 @@
+# Use the latest Ruby image from Docker Hub as the base image.
 FROM ruby:latest
-
-RUN apt update \
-	&& apt upgrade -y \
-	&& apt install yarn -y \
-	&& apt install git -y \
-	&& gem install rails \
-	&& mkdir -p /opt/tsek
-
-COPY ./app /opt
-
-ONBUILD WORKDIR /opt/app
-
-ONBUILD ADD . /opt/app
-
-ONBUILD EXPOSE 3000
-
-ONBUILD RUN gem install bundler:1.17.2 && bundle install --without production && bundle update --bundler && rails db:migrate && rails db:seed && rails test
-
-# To clone app (This must be done before you build the container):
-# ``` sh
-#	git clone https://github.com/mhartl/hello_app_original.git app
-# ```
-
-# To build first image:
-# ``` sh
-# 	docker build -t ft-rails:on-build .
-# ```
-
-# Dokerfile (from exersise):
-# FROM	ft-rails
-#
-# EXPOSE 3000
-#
-# CMD ["rails", "s", "-b", "0.0.0.0", "-p", "3000"]
-
-# To generate the second Dockerfile:
-#``` sh
-# { echo "FROM ft-rails:on-build"; echo "EXPOSE 3000"; echo "CMD [ \"rails\", \"s\", \"-b\", \"0.0.0.0\", \"-p\",\"3000\" ]";} > app/Dockerfile
-# ```
-
-# To build second Dockerfile:
-# ``` sh
-#	docker build -t rails:ex02 ./app
-# ```
-
-# To run second Dockerfile:
-# ``` sh
-#	docker run -rm -p 3000:3000 rails:ex02
-# ```
+# Set an environment variable named $PORT on your bash terminal to be '3000'.
+ENV PORT 3000
+# Expose port 3000 of the virtual container to your local machine.
+EXPOSE $PORT
+# Use a directory called /opt/app/ in which to store the ruby application's files.
+RUN mkdir -p /opt/
+WORKDIR /opt/
+# Install Ruby on Rails app dependencies
+RUN gem install rails bundler
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -yf nodejs yarn
+# Generate and configure hello_world rails app
+RUN rails new app 
+WORKDIR /opt/app/
+RUN bundle update && bundle install

@@ -1,4 +1,1 @@
-# Stop and remove a docker service. The $() returns the is's of all docker sevices.
-# (ls) List, (-q) quite, returns service id only.
-
 docker service rm $(docker service ls -q)

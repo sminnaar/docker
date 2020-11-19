@@ -12,7 +12,8 @@ RUN apt update \
 ##&& rm tmp/chat_server.tar.bz2 \
 && groupadd -g 503 teamspeakadmin \
 && useradd -u 503 -g 503 -d ${TS} teamspeakadmin \
-&& mkdir /data && chown -R teamspeakadmin:teamspeakadmin ${TS} /data \
+&& mkdir /data \
+&& chown -R teamspeakadmin:teamspeakadmin ${TS} /data
 
 
 USER teamspeakadmin

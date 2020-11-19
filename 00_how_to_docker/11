@@ -1,4 +1,1 @@
-# List the docker volumes. If there are containers running their disk space will be displayed
-# as an unnamed volume
-
 docker volume ls

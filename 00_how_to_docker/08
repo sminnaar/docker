@@ -1,4 +1,1 @@
-# Launch a container with the alpine:latest as base, (-it ) launch an interactive terminal
-# to be able to execute commands in the contaner shell and (--rm) when exited stop container.
-
 docker run -it --rm alpine

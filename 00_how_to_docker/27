@@ -1,6 +1,1 @@
-# ssh into the swarm leader and run a command:
-# Displays the logs of a docker service. (-f) Follow, continue streaming the new output from the service's
-# STDOUT and STDERR. The $() returns the id of the .1 replica of the engineering bay service. Omit the (-f)
-# flag to include all replicas of the service
-
 docker-machine ssh Char "docker service logs -f $(docker service ps engineering-bay -f 'name=engineering-bay.1' -q)"

@@ -1,4 +1,1 @@
-# Remove docker container, (-f) force. The $() varible will return (ps) info about containers
-# (-a) all and (-q) quite: only return container id's
-
 docker rm -f $(docker ps -a -q)
