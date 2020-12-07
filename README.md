@@ -22,8 +22,14 @@ cat 01 | bash
 ```
 ### Explinations of the commands:
 01. Create a virtual machine with docker-machine, (--driver) use the virtualbox driver and (--name) name it Char
+    ```bash
+    docker-machine create --driver virtualbox Char
+    ```
 
 02. Get the IP of Char
+    ```bash
+    docker-machine ip Char
+    ```
 
 03. Set DOCKER ENV varialbles to console environment.
     - Note: commands with $( ) as arguments tend to break with the "while do" and "cat 27 | bash" commands. Might want to run them manually.
@@ -32,18 +38,35 @@ cat 01 | bash
     ```bash
     env | grep DOCKER
     ```
+    ```bash
+    eval $(docker-machine env Char)
+    ```
 
 04. Pull the hello-world docker image from docker hub
+    ```bash
+    docker pull hello-world
+    ```
 
 05. Launch the hello-world container
-
+    ```
+    docker run hello-world
+    ```
 06. Launch a container, set restart varible, (-p) bind port 80 to docker-machine port 5000, (-d) detach, (--name) name it overlord and use the nginx image.
-    - Use { docker-machine-ip } : { port }  in browser to test
+    - Use { docker-machine-ip } : { 5000 }  in browser to test
+    ```bash
+    docker run --restart=always -p 5000:80 -d --name overlord nginx
+    ```
 
 07. Inspecting a contaner returns a .JSON with the IP as an attribute -f formats the output and only prints the IP of the container
+    ```bash
+    docker inspect -f '{{.NetworkSettings.IPAddress}}' overlord
+    ```
 
 08. Launch a container with the alpine:latest as base, (-it ) launch an interactive terminal to be able to execute commands in the contaner shell and (--rm) when exited stop container.
     - Note: This command does not work with the "while do" and "cat 27 | bash" commands as it needs to bind your terminal to the container terminal.
+    ```bash
+    docker run -it --rm alpine
+    ```
 
 09. Run container with debian running, (-it) open a shell terminal, (--rm) remove itself when exited.
     - Note: This command does not work with the "while do" and "cat 27 | bash" commands as it needs to bind your terminal to the container terminal.
@@ -51,13 +74,24 @@ cat 01 | bash
     ```bash
     apt-get update && apt-get install -y gcc vim git
     ```
+    ```bash
+    docker run -it --rm debian
+    ```
 
 10. Create a docker volume named hatchery this is allocateble storage for your containers to use. In this case it will be used by the mysql docker container.
+    ```bash
+    docker volume create --name hatchery
+    ```
 
 11. List the docker volumes. If there are containers running, their disk space will be displayed as an unnamed volume.
+    ```bash
+    docker volume ls
+    ```
 
 12. Launch a mysql container, (-d) detach, set restart, (-p) bind port 3306 of docker-machine to port 3306 of container, (-v) attach volume, (-e) set environmental variables, (--name) name it and use the mysql:latest image.
-
+    ```bash
+    docker run -d --restart=on-failure -p 3306:3306 -v hatchery:/var/lib/mysql -e MYSQL_DATABASE=zerglings -e MYSQL_ROOT_PASSWORD=Kerrigan --name spawning-pool mysql
+    ```
 13. Execute the env command in the spawning-pool container shell.
 
 14. Run a docker container, (-d) detatch, (--name) name it, (-p) bind port 8080 of the docker-machine to port 80 of the container, (--link) import env from a container as :tag, (-e) set env variables and use the wordpress image.
