@@ -93,20 +93,42 @@ cat 01 | bash
     docker run -d --restart=on-failure -p 3306:3306 -v hatchery:/var/lib/mysql -e MYSQL_DATABASE=zerglings -e MYSQL_ROOT_PASSWORD=Kerrigan --name spawning-pool mysql
     ```
 13. Execute the env command in the spawning-pool container shell.
+    ```bash
+    docker exec spawning-pool env
+    ```
 
 14. Run a docker container, (-d) detatch, (--name) name it, (-p) bind port 8080 of the docker-machine to port 80 of the container, (--link) import env from a container as :tag, (-e) set env variables and use the wordpress image.
+    ```bash
+    docker run -d --name lair -p 8080:80 --link spawning-pool:mysql -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASS=Kerrigan -e WORDPRESS_DB_HOST=mysql -e MYSQL_PORT_3306_TCP=3306  wordpress
+    ```
 
 15. Run a docker container, (-d) detatch, (-p) bind port 8081 of the docker-machine to port 80 of the container, (--link) import env variables from spawning-pool with prefix db, (--name) name it and use the phpmyadmin image.
+    ```bash
+    docker run -d -p 8081:80 --link spawning-pool:db --name roach-warden phpmyadmin/phpmyadmin
+    ```
 
 16. Display the logs of a docker container
     - Note: This command does not work with the "while do" and "cat 27 | bash" commands as it needs to bind your terminal to the container terminal.
+    ```bash
+    docker logs spawning-pool
+    ```
 
 17. List the docker containers
+    ```bash
+    docker container ls
+    ```
 
 18. Restart a docker container
+    ```bash
+    docker restart overlord
+    ```
 
 19. Run a docker container, (-d) run detached, (-p) bind it to a port, 3000 of docker-machine to 3000 of container, (--name) name it, (-v) link physical space on host, (-e) set environmental variables, (-w) set working dir, use the python:2-slim image, (bash) use bash to (-c) run commands inside the container. The commands will: update apt repository, upgrade it replying with (-y) yes to prompts, use pip to install flask and run flask with the host at 0.0.0.0 and bind it to port 3000 of the container.
     - Note: This command does not work with the "while do" and "cat 27 | bash" commands as it interpretes the quotes in a weird way.
+    ```bash
+    docker run -d -p 3000:3000 --name Abathur -v /home/:/root -e FLASK_APP=app.py -w /root python:2-slim bash -c "apt update && apt upgrade -y && python -m pip install --upgrade pip && pip install flask && flask run -h 0.0.0.0 -p 3000"
+    ```
+
     - Note: app.py needs to be created with the following content and then copied into the container.
     ```bash
     from flask import Flask
@@ -128,15 +150,24 @@ cat 01 | bash
 
 20. Initialise a docker swarm, (--advertise-addr) advertise its address as a string and bind it to the docker-machine port 2377. The ${ } will resolve to the Char docker-machine IP.
     - Note: commands with $( ) as arguments tend to break with the "while do" and "cat 27 | bash" commands. Might want to run them manually.
+    ```bash
+    docker swarm init --advertise-addr $(docker-machine ip Char):2377
+    ```
     - Note: Only use port 2377 or leave it blank to use default(2377).
     - To test:
     ```bash
     docker node ls
     ```
 
-21. Create a docker-machine (VM), (--driver) user a specific driver and name it Aiur
+21. Create a docker-machine (VM), (--driver) user a specific driver and name it Aiur.
+    ```bash
+    docker-machine create --driver virtualbox Aiur
+    ```
 
 22. ssh into a Docker-Machine VM.
+    ```bash
+    docker-machine ssh Aiur "docker swarm join --token SWMTKN-1-3vf7l9thkaljcl3imhogax7aybwd4n49zxo356kjxznc062mdk-6chq7q4x5hu0w1dsks13hniuy 192.168.99.106:2377"
+    ```
     - Note: The output of exercise 20 should be run in the Aiur docker-machine to connect it to the swarm.
     - This can be done with the following command, replacing the quotes with the output of exercise 20:
     ```bash
@@ -144,34 +175,70 @@ cat 01 | bash
     ```
 
 23. Create a docker network of (--driver) overlay type and name it overmind.
+    ```bash
+    docker network create --driver overlay overmind
+    ```
 
-24. Launch a docker service (a container connected in a swarm) with, (-e) set environmental variables, (--name) name it, (--network) connect it and use the rabbitmq image
+24. Launch a docker service (a container connected in a swarm) with, (-e) set environmental variables, (--name) name it, (--network) connect it and use the rabbitmq image.
+    ```bash
+    docker service create -e RABBITMQ_DEFAULT_USER=commander -e RABBITMQ_DEFAULT_PASS=Kerrigan --name orbital-command --network overmind rabbitmq
+    ```
 
 25. List docker services.
+    ```bash
+    docker service ls
+    ```
 
 26. Create a docker service (a container runninng in a swarm) with, (-e) environmental variables, (--replicas) duplicate the service, (--network) connect to a swarm network, (--name) name it and use the 42school/engineering-bay image.
     - Note: Checking the logs of the service when created without any environmental variables reveals the need for them nl: OC_USERNAME and OC_PASSWD
+    ```bash
+    docker service create -e OC_USERNAME=commander -e OC_PASSWD=Kerrigan --replicas 2 --network overmind --name engineering-bay 42school/engineering-bay
+    ```
 
 27. ssh into the swarm leader and run a command:  
 Displays the logs of a docker service. (-f) Follow, continue streaming the new output from the service's STDOUT and STDERR. The $() returns the id of the ".1" replica of the engineering bay service. Omit the (-f) flag to include all replicas of the service.
     - Note: commands with $( ) as arguments tend to break with the "while do" and "cat 27 | bash" commands. Might want to run them manually.
+    ```bash
+    docker-machine ssh Char "docker service logs -f $(docker service ps engineering-bay -f 'name=engineering-bay.1' -q)"
+    ```
 
 28. Create a docker service, (-e) set environmental variable, (--replicas) create replicas, (--network) connect to a network, (--name) name it and use the 24school/marine-squad image.
+    ```bash
+    docker service create -e OC_USERNAME=commander -e OC_PASSWD=Kerrigan --replicas 2 --network overmind --name marines 42school/marine-squad
+    ```
 
 29. Display docker service tasks.
+    ```bash
+    docker service ps marines
+    ```
 
 30. Scale (increase or decrease) a docker service.
+    ```bash
+    docker service scale marines=20
+    ```
 
 31. Stop and remove a docker service. The $( ) returns the id's of all docker sevices. (ls) List, (-q) quite, returns service id only.
     - Note: commands with $( ) as arguments tend to break with the "while do" and "cat 31 | bash" commands. Might want to run them manually.
+    ```bash
+    docker service rm $(docker service ls -q)
+    ```
 
 32. Remove docker container, (-f) force. The $() varible will return (ps) info about containers (-a) all and (-q) quite: only return container id's.
     - Note: commands with $( ) as arguments tend to break with the "while do" and "cat 32 | bash" commands. Might want to run them manually.
+    ```bash
+    docker rm -f $(docker ps -a -q)
+    ```
 
 33. Remove docker image (-f) force removal. The $() variable will return info of all docker images. (-q) Quite, only return id's.
     - Note: commands with $( ) as arguments tend to break with the "while do" and "cat 33 | bash" commands. Might want to run them manually.
+    ```bash
+    docker rmi -f $(docker images -q)
+    ```
 
 34. Stop and (rm) remove/delete a Docker machine, (-y) auto select yes for prompt.
+    ```bash
+    docker-machine rm -y Aiur
+    ```
 
 ## 01_dockerfiles
 
